@@ -1,0 +1,35 @@
+name: Build And Deploy
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        ref: ${{ secrets.CHECKOUT }}
+    - name: Build
+      run: |
+        yarn install
+        yarn build
+      env:
+        VUE_APP_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        VUE_APP_ACCEPT: ${{ secrets.ACCEPT }}
+        VUE_APP_HOST: ${{ secrets.HOST }}
+        VUE_APP_USER: ${{ secrets.USER }}
+        VUE_APP_REPO: ${{ secrets.REPO }}
+        VUE_APP_AUTHOR: ${{ secrets.AUTHOR }}
+        VUE_APP_EMAIL: ${{ secrets.EMAIL }}
+        VUE_APP_BRANCH: ${{ secrets.BRANCH }}
+        VUE_APP_INIT_BRANCH: ${{ secrets.INIT }}
+    - name: Deploy
+      uses: JamesIves/github-pages-deploy-action@releases/v3
+      with:
+        GITHUB_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        BRANCH: gh-pages
+        FOLDER: dist/build/h5
