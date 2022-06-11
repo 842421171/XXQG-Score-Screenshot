@@ -1,12 +1,12 @@
-var token = process.env.VUE_APP_TOKEN
-var accept = process.env.VUE_APP_ACCEPT
-var host = process.env.VUE_APP_HOST
-var user = process.env.VUE_APP_USER
-var repo = process.env.VUE_APP_REPO
-var initBranch = process.env.VUE_APP_INIT_BRANCH
-var branch = process.env.VUE_APP_BRANCH
-var author = process.env.VUE_APP_AUTHOR
-var email = process.env.VUE_APP_EMAIL
+var token = window.atob(localStorage.getItem('token'))
+var accept = localStorage.getItem('accept')
+var host = localStorage.getItem('host')
+var user = localStorage.getItem('user')
+var repo = localStorage.getItem('repo')
+var initBranch = localStorage.getItem('initBranch')
+var branch = localStorage.getItem('branch')
+var author = localStorage.getItem('author')
+var email = localStorage.getItem('email')
 
 async function commitsList() {
 	var url = host + '/repos/' + user + '/' + repo + '/commits?sha=' + initBranch

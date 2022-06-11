@@ -8,6 +8,11 @@
 				"app-plus": {
 					"titleNView": {
 						"buttons": [{
+							"float": "left",
+							"fontSize": "18",
+							"text": "配置 ",
+							"color": "#007AFF"
+						}, {
 							"float": "right",
 							"fontSize": "18",
 							"text": "上传 ",
@@ -19,16 +24,17 @@
 
 		},
 		{
-			"path": "pages/index/index",
-			"style": {
-				"navigationBarTitleText": "uni-app"
-			}
-		},
-		{
 			"path": "pages/tabBar/upload/upload",
 			"style": {
 				"navigationBarTitleText": "上传图片"
 			}
+		}, {
+			"path": "pages/tabBar/config/config",
+			"style": {
+				"navigationBarTitleText": "基础信息配置",
+				"enablePullDownRefresh": false
+			}
+
 		}
 	],
 	"globalStyle": {

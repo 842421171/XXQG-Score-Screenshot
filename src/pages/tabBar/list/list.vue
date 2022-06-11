@@ -29,17 +29,34 @@
 			}
 		},
 		created() {
+			this.isFirst()
 			this.getPictures()
 		},
 		onPullDownRefresh() {
 			this.getPictures()
 		},
-		onNavigationBarButtonTap() {
-			uni.navigateTo({
-				url: '../upload/upload'
-			})
+		onNavigationBarButtonTap(e) {
+			if (e.float == 'left') {
+				uni.navigateTo({
+					url: '../config/config'
+				})
+			} else if (e.float == 'right') {
+				uni.navigateTo({
+					url: '../upload/upload'
+				})
+			}
 		},
 		methods: {
+			isFirst() {
+				var first = localStorage.getItem('first')
+				console.log(first)
+				if (!first) {
+					uni.navigateTo({
+						url: '../config/config'
+					})
+					localStorage.setItem('first', true)
+				}
+			},
 			getPictures() {
 				github.contentsList('images').then(res => {
 					if (res.status == 200) {
