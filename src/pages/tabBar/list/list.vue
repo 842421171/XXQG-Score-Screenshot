@@ -1,11 +1,11 @@
 <template>
-	<view>
+	<view class="uni-center">
 		<view class="uni-uploader">
 			<view class="uni-uploader-body">
 				<view class="uni-uploader__files">
 					<block v-for="image, index in imageInfo" :key="index">
-						<view class="uni-uploader__file">
-							<image class="uni-uploader__img" :src="image.download_url" :data-src="image.download_url"
+						<view class="uni-uploader__file uni-grid-9-item">
+							<image class="uni-uploader__img" mode="aspectFit" :src="image.download_url" :data-src="image.download_url"
 								@touchstart.prevent="touchstart(index)" @touchend="touchend">
 							</image>
 							<view class="uni-center">{{ image.name.split('.')[0] }}</view>
@@ -123,5 +123,5 @@
 </script>
 
 <style>
-
+	
 </style>
