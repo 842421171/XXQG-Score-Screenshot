@@ -76,7 +76,7 @@
 				</view>
 			</view>
 			<view class="uni-btn-v">
-				<button type="primary" form-type="submit">提交</button>
+				<button type="primary" form-type="submit">保存</button>
 				<button form-type="reset">重置</button>
 			</view>
 		</form>
@@ -131,6 +131,11 @@
 				localStorage.setItem('branch', this.baseInfo.branch)
 				localStorage.setItem('author', this.baseInfo.author)
 				localStorage.setItem('email', this.baseInfo.email)
+				uni.showToast({
+					title: '保存成功',
+					icon: 'success',
+					duration: 2000
+				})
 			},
 			formReset() {
 				this.getBaseInfo()

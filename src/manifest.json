@@ -1,6 +1,6 @@
 {
-    "name" : "WallpaperGallery",
-    "appid" : "__UNI__A51E911",
+    "name" : "XXQG-Score-Screenshot",
+    "appid" : "__UNI__C94E1E0",
     "description" : "",
     "versionName" : "1.0.0",
     "versionCode" : "100",
@@ -68,5 +68,8 @@
     "uniStatistics" : {
         "enable" : false
     },
-    "vueVersion" : "2"
+    "vueVersion" : "2",
+    "h5" : {
+        "title" : ""
+    }
 }

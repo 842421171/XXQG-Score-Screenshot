@@ -63,10 +63,13 @@
 			}
 		},
 		created() {
-			github.commitsList().then(res => github.checkBranch(res[0].sha) )
+			github.commitsList().then(res => github.checkBranch(res[0].sha))
 		},
 		methods: {
 			formSubmit() {
+				uni.showLoading({
+					title: '上传中'
+				});
 				if (this.image != null) {
 					var reader = new FileReader()
 					reader.readAsDataURL(this.imageFile)
@@ -74,6 +77,14 @@
 						var bs4 = reader.result
 						github.uploadImage(bs4, this.date, 'images').then(res => {
 							if (res.status == 201) {
+								setTimeout(() => {
+									uni.hideLoading()
+								}, 2000)
+								uni.showToast({
+									title: '上传成功',
+									icon: 'success',
+									duration: 2000
+								});
 								this.image = null
 								this.imageFile = null
 								this.date = this.getDate()
@@ -92,7 +103,7 @@
 				this.image = null
 				this.imageFile = null
 			},
-			bindDateChange: function (e) {
+			bindDateChange: function(e) {
 				this.date = e.detail.value
 			},
 			getDate(type) {
@@ -120,10 +131,10 @@
 						this.imageFile = res.tempFiles[0]
 					},
 					fail: (err) => {
-						console.log("err: ", err);
-						uni.showModal({
-							content: err,
-							showCancel: false
+						uni.showToast({
+							title: err,
+							icon: null,
+							duration: 2000
 						});
 						// #ifdef APP-PLUS
 						if (err['code'] && err.code !== 0 && this.sourceTypeIndex === 2) {
@@ -168,7 +179,7 @@
 					}
 				})
 			},
-			previewImage: function (e) {
+			previewImage: function(e) {
 				var current = e.target.dataset.src
 				uni.previewImage({
 					current: current,

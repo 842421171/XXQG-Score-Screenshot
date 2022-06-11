@@ -3,7 +3,7 @@
 		{
 			"path": "pages/tabBar/list/list",
 			"style": {
-				"navigationBarTitleText": "概览",
+				"navigationBarTitleText": "总览",
 				"enablePullDownRefresh": true,
 				"app-plus": {
 					"titleNView": {

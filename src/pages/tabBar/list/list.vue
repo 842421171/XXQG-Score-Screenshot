@@ -6,7 +6,7 @@
 					<block v-for="image, index in imageInfo" :key="index">
 						<view class="uni-uploader__file">
 							<image class="uni-uploader__img" :src="image.download_url" :data-src="image.download_url"
-								@touchstart.prevent="touchstart(index)" @touchend="touchend" @tap="previewImage">
+								@touchstart.prevent="touchstart(index)" @touchend="touchend">
 							</image>
 							<view class="uni-center">{{ image.name.split('.')[0] }}</view>
 						</view>
@@ -25,7 +25,8 @@
 			return {
 				imageInfo: [],
 				imageList: [],
-				Loop: null
+				Loop: null,
+				isDelete: false
 			}
 		},
 		created() {
@@ -49,7 +50,6 @@
 		methods: {
 			isFirst() {
 				var first = localStorage.getItem('first')
-				console.log(first)
 				if (!first) {
 					uni.navigateTo({
 						url: '../config/config'
@@ -58,14 +58,27 @@
 				}
 			},
 			getPictures() {
+				uni.showLoading({
+					title: '加载中'
+				})
 				github.contentsList('images').then(res => {
+					uni.hideLoading()
 					if (res.status == 200) {
 						res.json().then(json => {
-							this.imageInfo = json
-							this.imageList = this.imageInfo.filter(obj => obj.type == 'file').map(obj =>
-								obj.download_url)
+							this.imageInfo = json.reverse().filter(obj => obj.type == 'file')
+							this.imageList = this.imageInfo.map(obj => obj.download_url)
 						}).catch(err => {
-							console.log('err: ' + err)
+							uni.showToast({
+								title: 'err: ' + err,
+								icon: null,
+								duration: 2000
+							})
+						})
+					} else {
+						uni.showToast({
+							title: 'status: ' + res.status,
+							icon: null,
+							duration: 2000
 						})
 					}
 				})
@@ -81,23 +94,29 @@
 			touchstart(index) {
 				clearInterval(this.Loop); //再次清空定时器，防止重复注册定时器
 				this.Loop = setTimeout(function() {
+					this.isDelete = true
+					var image = this.imageInfo[index]
 					uni.showModal({
 						title: '删除',
-						content: '确定要删除这张照片吗？',
+						content: '确定要删除 ' + image.name.split('.')[0] + ' 这张照片吗？',
 						success: res => {
 							if (res.confirm) {
-								github.deleteImage(this.imageInfo[index]).then(res => {
+								github.deleteImage(image).then(res => {
 									if (res.status == 200) {
 										this.getPictures()
 									}
 								})
 							}
+							this.isDelete = false
 						}
 					});
-				}.bind(this), 1000);
+				}.bind(this), 500);
 			},
-			touchend() {
+			touchend: function(e) {
 				clearInterval(this.Loop);
+				if (!this.isDelete) {
+					this.previewImage(e)
+				}
 			},
 		}
 	}

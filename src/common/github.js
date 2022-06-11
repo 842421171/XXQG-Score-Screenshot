@@ -56,14 +56,19 @@ function createBranch(sha) {
 		})
 	}).then(res => {
 		if (res.status == 201) {
-			uni.showModal({
-				content: branch + ' 分支创建成功！',
-				showCancel: false
+			uni.showToast({
+				title: branch + ' 分支创建成功！',
+				icon: 'none', //如果要纯文本，不要icon，将值设为'none'
+				duration: 2000 //持续时间为 2秒
 			})
 		} else if (res.status == 422) {
 			uni.showModal({
-				content: branch + ' 分支创建失败！',
-				showCancel: false
+				content: branch + ' 分支创建失败！<br>status: ' + res.status,
+				success: res => {
+					if (res.confirm) {
+						createBranch(sha)
+					}
+				}
 			})
 		}
 	})
