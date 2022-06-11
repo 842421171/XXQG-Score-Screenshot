@@ -142,11 +142,16 @@ async function contentsList(path) {
 	return res
 }
 
+function addJsdelivrCDN(path) {
+	return 'https://cdn.jsdelivr.net/gh/' + user + '/' + repo + '@' + branch + '/' + path
+}
+
 export {
 	commitsList,
 	checkBranch,
 	createBranch,
 	uploadImage,
 	deleteImage,
-	contentsList
+	contentsList,
+	addJsdelivrCDN
 }

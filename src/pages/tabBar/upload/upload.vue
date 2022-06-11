@@ -133,7 +133,7 @@
 					fail: (err) => {
 						uni.showToast({
 							title: err,
-							icon: null,
+							icon: 'none',
 							duration: 2000
 						});
 						// #ifdef APP-PLUS

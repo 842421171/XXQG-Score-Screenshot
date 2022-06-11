@@ -5,8 +5,9 @@
 				<view class="uni-uploader__files">
 					<block v-for="image, index in imageInfo" :key="index">
 						<view class="uni-uploader__file uni-grid-9-item" style="border: none;">
-							<image class="uni-uploader__img" mode="aspectFill" :src="image.download_url" :data-src="image.download_url"
-								@touchstart.prevent="touchstart(index)" @touchend="touchend">
+							<image class="uni-uploader__img" mode="aspectFill" :src="image.download_url"
+								:data-src="image.download_url" @touchstart.prevent="touchstart(index)"
+								@touchend="touchend">
 							</image>
 							<view class="uni-center">{{ image.name.split('.')[0] }}</view>
 						</view>
@@ -66,18 +67,23 @@
 					if (res.status == 200) {
 						res.json().then(json => {
 							this.imageInfo = json.reverse().filter(obj => obj.type == 'file')
+							this.imageInfo.forEach(obj => {
+									obj.download_url = github.addJsdelivrCDN(obj.path)
+								})
+							console.log(this.imageInfo)
 							this.imageList = this.imageInfo.map(obj => obj.download_url)
+							console.log(this.imageList)
 						}).catch(err => {
 							uni.showToast({
 								title: 'err: ' + err,
-								icon: null,
+								icon: 'none',
 								duration: 2000
 							})
 						})
 					} else {
 						uni.showToast({
 							title: 'status: ' + res.status,
-							icon: null,
+							icon: 'none',
 							duration: 2000
 						})
 					}
@@ -123,5 +129,5 @@
 </script>
 
 <style>
-	
+
 </style>
