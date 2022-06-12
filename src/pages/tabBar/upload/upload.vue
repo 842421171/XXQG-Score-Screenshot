@@ -25,7 +25,8 @@
 								<block v-if="image != null">
 									<view class="uni-uploader__file">
 										<image class="uni-uploader__img" :src="image" :data-src="image"
-											@tap="previewImage"></image>
+											@tap="previewImage">
+										</image>
 									</view>
 								</block>
 								<view v-else class="uni-uploader__input-box">
@@ -38,6 +39,7 @@
 				<view class="uni-btn-v">
 					<button type="primary" form-type="submit">提交</button>
 					<button form-type="reset">重置</button>
+					<button @tap="deletePictures">清空图片</button>
 				</view>
 			</form>
 		</view>
@@ -207,6 +209,10 @@
 				}
 
 				return status;
+			},
+			deletePictures() {
+				this.image = null
+				this.imageFile = null
 			}
 		}
 	}
