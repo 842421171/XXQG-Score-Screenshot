@@ -6,8 +6,7 @@
 					<block v-for="image, index in imageInfo" :key="index">
 						<view class="uni-uploader__file uni-grid-9-item" style="border: none;">
 							<image class="uni-uploader__img" mode="aspectFill" :src="image.download_url"
-								:data-src="image.download_url" @touchstart.prevent="touchstart(index)"
-								@touchend="touchend">
+								:data-src="image.download_url" @tap="previewImage" @longtap="deletePictures(index)">
 							</image>
 							<view class="uni-center">{{ image.name.split('.')[0] }}</view>
 						</view>
@@ -68,11 +67,9 @@
 						res.json().then(json => {
 							this.imageInfo = json.reverse().filter(obj => obj.type == 'file')
 							this.imageInfo.forEach(obj => {
-									obj.download_url = github.addJsdelivrCDN(obj.path)
-								})
-							console.log(this.imageInfo)
+								obj.download_url = github.addJsdelivrCDN(obj.path)
+							})
 							this.imageList = this.imageInfo.map(obj => obj.download_url)
-							console.log(this.imageList)
 						}).catch(err => {
 							uni.showToast({
 								title: 'err: ' + err,
@@ -97,33 +94,23 @@
 					urls: this.imageList
 				})
 			},
-			touchstart(index) {
-				clearInterval(this.Loop); //再次清空定时器，防止重复注册定时器
-				this.Loop = setTimeout(function() {
-					this.isDelete = true
-					var image = this.imageInfo[index]
-					uni.showModal({
-						title: '删除',
-						content: '确定要删除 ' + image.name.split('.')[0] + ' 这张照片吗？',
-						success: res => {
-							if (res.confirm) {
-								github.deleteImage(image).then(res => {
-									if (res.status == 200) {
-										this.getPictures()
-									}
-								})
-							}
-							this.isDelete = false
+			deletePictures(index) {
+				var image = this.imageInfo[index]
+				uni.showModal({
+					title: '删除',
+					content: '确定要删除 ' + image.name.split('.')[0] + ' 这张照片吗？',
+					success: res => {
+						if (res.confirm) {
+							github.deleteImage(image).then(res => {
+								if (res.status == 200) {
+									this.getPictures()
+								}
+							})
 						}
-					});
-				}.bind(this), 500);
-			},
-			touchend: function(e) {
-				clearInterval(this.Loop);
-				if (!this.isDelete) {
-					this.previewImage(e)
-				}
-			},
+						this.isDelete = false
+					}
+				});
+			}
 		}
 	}
 </script>

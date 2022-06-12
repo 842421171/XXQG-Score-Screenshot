@@ -111,7 +111,7 @@
 		methods: {
 			getBaseInfo() {
 				var token = localStorage.getItem('token')
-				this.baseInfo.token = window.atob(token ? token : '')
+				this.baseInfo.token = atob(token ? token : '')
 				this.baseInfo.accept = localStorage.getItem('accept')
 				this.baseInfo.host = localStorage.getItem('host')
 				this.baseInfo.user = localStorage.getItem('user')

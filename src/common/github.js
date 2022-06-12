@@ -1,4 +1,4 @@
-var token = window.atob(localStorage.getItem('token'))
+var token = atob(localStorage.getItem('token'))
 var accept = localStorage.getItem('accept')
 var host = localStorage.getItem('host')
 var user = localStorage.getItem('user')
