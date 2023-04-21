@@ -72,7 +72,8 @@
     "h5" : {
         "title" : "",
         "router" : {
-            "base" : "/XXQG-Score-Screenshot/"
+            "base" : "./",
+            "mode" : "hash"
         }
     }
 }
