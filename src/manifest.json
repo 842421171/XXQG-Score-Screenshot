@@ -70,6 +70,9 @@
     },
     "vueVersion" : "2",
     "h5" : {
-        "title" : ""
+        "title" : "",
+        "router" : {
+            "base" : "/XXQG-Score-Screenshot/"
+        }
     }
 }
