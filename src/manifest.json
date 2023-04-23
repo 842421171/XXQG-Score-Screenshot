@@ -72,7 +72,9 @@
     "h5" : {
         "title" : "学习强国分数每日分数截图统计",
         "router" : {
-            "base" : "./XXQG-Score-Screenshot/"
-        }
+			"mode": "hash",
+            "base" : "/"
+        },
+		"publicPath": "/"
     }
 }
