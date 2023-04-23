@@ -27,6 +27,8 @@ jobs:
         VUE_APP_EMAIL: ${{ secrets.EMAIL }}
         VUE_APP_BRANCH: ${{ secrets.BRANCH }}
         VUE_APP_INIT_BRANCH: ${{ secrets.INIT }}
+	  with:
+	    node-version: '12'
     - name: Deploy
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
